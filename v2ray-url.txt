@@ -1,0 +1,11 @@
+Готовый v2ray URL для LsJ⚔️VPN:
+
+v2ray://eyJ2IjoiMiIsInBzIjoiTHNK4pWkVlBOIC0gQ29tcmFkZXMiLCJhZGQiOiI4MC43NC4yNS45MiIsInBvcnQiOiI0NDMiLCJpZCI6IjI5Y2M5OTAyLTJhMmMtNDgzMS1hYmYzLTY0NzEzMjViZjM1MiIsImFpZCI6IjAiLCJuZXQiOiJncnBjIiwidHlwZSI6Imd1biIsImhvc3QiOiJnb29nbGUtZ3BjLXNlcnZpY2UiLCJwYXRoIjoiIiwidGxzIjoicmVhbGl0eSIsInNuaSI6Ind3dy5ib29raW5nLmNvbSIsImZwIjoiY2hyb21lIiwiYWxwbiI6ImgyIiwicGJrIjoiIiwic2lkIjoiIiwic3B4IjoiLyJ9
+
+Инструкция по использованию:
+1. Скопируйте эту ссылку
+2. Откройте приложение v2raytun
+3. Вставьте ссылку в поле импорта
+4. Нажмите "Добавить"
+
+Или просто нажмите на ссылку на мобильном устройстве - приложение откроется автоматически!

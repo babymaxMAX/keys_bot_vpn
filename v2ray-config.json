@@ -1,0 +1,19 @@
+{
+  "v": "2",
+  "ps": "LsJ⚔️VPN - Comrades",
+  "add": "80.74.25.92",
+  "port": "443",
+  "id": "29cc9902-2a2c-4831-abf3-6471325bf352",
+  "aid": "0",
+  "net": "grpc",
+  "type": "gun",
+  "host": "google-gpc-service",
+  "path": "",
+  "tls": "reality",
+  "sni": "www.booking.com",
+  "fp": "chrome",
+  "alpn": "h2",
+  "pbk": "",
+  "sid": "",
+  "spx": "/"
+}

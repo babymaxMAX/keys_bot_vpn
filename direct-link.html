@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LsJ⚔️VPN - Автоподключение</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .loading-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: #f39c12;
+            border-radius: 20px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #6c757d;
+            margin-bottom: 30px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #f39c12;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .status {
+            font-size: 14px;
+            color: #6c757d;
+            margin-bottom: 20px;
+        }
+
+        .fallback-link {
+            background: #28a745;
+            color: white;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .fallback-link:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+
+        .error {
+            color: #dc3545;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-container">
+        <div class="logo">⚔️</div>
+        <div class="title">LsJ⚔️VPN</div>
+        <div class="subtitle">Открываем приложение...</div>
+        
+        <div class="spinner"></div>
+        <div class="status" id="status">Подготовка к подключению...</div>
+        
+        <a href="#" class="fallback-link" id="fallbackLink" style="display: none;">
+            📱 Открыть вручную
+        </a>
+        
+        <div class="error" id="error" style="display: none;">
+            Приложение не найдено. Установите v2raytun из App Store.
+        </div>
+    </div>
+
+    <script>
+        // Конфигурация VPN
+        const vpnConfig = {
+            v: "2",
+            ps: "LsJ⚔️VPN - Comrades",
+            add: "80.74.25.92",
+            port: "443",
+            id: "29cc9902-2a2c-4831-abf3-6471325bf352",
+            aid: "0",
+            net: "grpc",
+            type: "gun",
+            host: "google-gpc-service",
+            path: "",
+            tls: "reality",
+            sni: "www.booking.com",
+            fp: "chrome",
+            alpn: "h2",
+            pbk: "",
+            sid: "",
+            spx: "/"
+        };
+
+        // Кодируем конфигурацию
+        const configString = JSON.stringify(vpnConfig);
+        const encodedConfig = btoa(configString);
+        const v2rayUrl = `v2ray://${encodedConfig}`;
+
+        const statusElement = document.getElementById('status');
+        const fallbackLink = document.getElementById('fallbackLink');
+        const errorElement = document.getElementById('error');
+
+        // Устанавливаем ссылку для fallback
+        fallbackLink.href = v2rayUrl;
+
+        let attemptCount = 0;
+        const maxAttempts = 3;
+
+        function attemptOpenApp() {
+            attemptCount++;
+            
+            if (attemptCount <= maxAttempts) {
+                statusElement.textContent = `Попытка ${attemptCount} из ${maxAttempts}...`;
+                
+                try {
+                    // Пытаемся открыть приложение
+                    window.location.href = v2rayUrl;
+                    
+                    // Если приложение не открылось через 2 секунды, показываем fallback
+                    setTimeout(() => {
+                        if (attemptCount < maxAttempts) {
+                            attemptOpenApp();
+                        } else {
+                            showFallback();
+                        }
+                    }, 2000);
+                    
+                } catch (error) {
+                    if (attemptCount < maxAttempts) {
+                        setTimeout(attemptOpenApp, 1000);
+                    } else {
+                        showFallback();
+                    }
+                }
+            } else {
+                showFallback();
+            }
+        }
+
+        function showFallback() {
+            statusElement.textContent = "Приложение не открылось автоматически";
+            fallbackLink.style.display = "inline-block";
+            errorElement.style.display = "block";
+        }
+
+        // Начинаем попытки открытия приложения
+        setTimeout(attemptOpenApp, 1000);
+
+        // Дополнительная проверка для iOS
+        if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+            // Для iOS добавляем дополнительную задержку
+            setTimeout(() => {
+                if (attemptCount < maxAttempts) {
+                    attemptOpenApp();
+                }
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
