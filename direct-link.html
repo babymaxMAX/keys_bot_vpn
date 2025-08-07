@@ -117,31 +117,8 @@
     </div>
 
     <script>
-        // Конфигурация VPN
-        const vpnConfig = {
-            v: "2",
-            ps: "LsJ⚔️VPN - Comrades",
-            add: "80.74.25.92",
-            port: "443",
-            id: "29cc9902-2a2c-4831-abf3-6471325bf352",
-            aid: "0",
-            net: "grpc",
-            type: "gun",
-            host: "google-gpc-service",
-            path: "",
-            tls: "reality",
-            sni: "www.booking.com",
-            fp: "chrome",
-            alpn: "h2",
-            pbk: "",
-            sid: "",
-            spx: "/"
-        };
-
-        // Кодируем конфигурацию
-        const configString = JSON.stringify(vpnConfig);
-        const encodedConfig = btoa(configString);
-        const v2rayUrl = `v2ray://${encodedConfig}`;
+        // Готовая v2ray ссылка для мгновенного подключения
+        const v2rayUrl = `v2ray://eyJ2IjoiMiIsInBzIjoiTHNK4pWkVlBOIC0gQ29tcmFkZXMiLCJhZGQiOiI4MC43NC4yNS45MiIsInBvcnQiOiI0NDMiLCJpZCI6IjI5Y2M5OTAyLTJhMmMtNDgzMS1hYmYzLTY0NzEzMjViZjM1MiIsImFpZCI6IjAiLCJuZXQiOiJncnBjIiwidHlwZSI6Imd1biIsImhvc3QiOiJnb29nbGUtZ3BjLXNlcnZpY2UiLCJwYXRoIjoiIiwidGxzIjoicmVhbGl0eSIsInNuaSI6Ind3dy5ib29raW5nLmNvbSIsImZwIjoiY2hyb21lIiwiYWxwbiI6ImgyIiwicGJrIjoiIiwic2lkIjoiIiwic3B4IjoiLyJ9`;
 
         const statusElement = document.getElementById('status');
         const fallbackLink = document.getElementById('fallbackLink');
