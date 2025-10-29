@@ -356,18 +356,21 @@ function htmlDirectPage({ slug }) {
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);margin:0;padding:20px;min-height:100vh;display:flex;align-items:center;justify-content:center}
 .card{background:white;border-radius:16px;padding:32px;max-width:420px;width:100%;box-shadow:0 20px 40px rgba(0,0,0,.1);text-align:center}
 .btn{display:inline-block;margin-top:14px;background:#28a745;color:white;padding:12px 18px;border-radius:10px;text-decoration:none;font-weight:700}
+.hint{font-size:14px;color:#6c757d;margin-top:10px}
 </style></head>
 <body>
 <div class="card">
   <div style="font-size:40px">⚔️</div>
   <h2>Открываем приложение...</h2>
   <p id="status">Подготовка к подключению</p>
+  <a class="btn" id="openNow" href="#">Открыть сейчас</a>
   <a class="btn" id="fallback" style="display:none" href="/u/${encodeURIComponent(slug)}/">Открыть вручную</a>
+  <div class="hint">Если автозапуск не сработал, нажмите «Открыть сейчас»</div>
 </div>
 <script>
   const cfg = new URL('config.html', window.location.href).toString();
   const deeplink = 'https://deeplink.website/?url=' + encodeURIComponent(cfg);
-  let attempts = 0, maxAttempts = 4;
+  let attempts = 0, maxAttempts = 4, started = false;
   function attempt(){
     attempts++;
     try{
@@ -378,7 +381,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
     }catch(e){}
     if(attempts<maxAttempts) setTimeout(attempt, 200);
   }
-  setTimeout(attempt, 100);
+  function startIfNeeded(){ if (started) return; started = true; attempt(); }
+  // Try automatically (may be blocked) and also on first user gesture
+  setTimeout(startIfNeeded, 300);
+  const openBtn = document.getElementById('openNow');
+  if (openBtn) openBtn.addEventListener('click', function(ev){ ev.preventDefault(); startIfNeeded(); });
+  ['click','touchstart','keydown','visibilitychange'].forEach(evt => {
+    document.addEventListener(evt, startIfNeeded, { once: true, passive: true });
+  });
 </script>
 </body></html>`;
 }
