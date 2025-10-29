@@ -242,6 +242,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
       <button class="connect-button" id="connectBtn" onclick="connectVPN()">🚀 Подключиться к VPN</button>
       <button class="copy-button" onclick="copyV2RayLink()">📋 Скопировать ссылку</button>
       <a class="telegram-link" href="/u/${encodeURIComponent(slug)}/qr">📷 QR-код</a>
+      <div id="deviceInfo" style="margin-top:14px;color:#e0e0e0;font-size:13px;opacity:.9"></div>
     </div>
   </div>
   <div class="copy-notification" id="copyNotification">Ссылка скопирована!</div>
@@ -319,6 +320,29 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
     copyToClipboard(originalKey);
     showNotification('VLESS ключ скопирован!');
   }
+
+  function detectDevice() {
+    const ua = navigator.userAgent || '';
+    const isIOS = /iPad|iPhone|iPod/.test(ua);
+    const isAndroid = /Android/.test(ua);
+    const el = document.getElementById('deviceInfo');
+    if (!el) return;
+    if (isIOS) {
+      el.innerHTML = '📱 iOS: Нажмите «Подключиться к VPN». Если не открылось — используйте «Скопировать ссылку».\n';
+    } else if (isAndroid) {
+      el.innerHTML = '🤖 Android: Нажмите «Подключиться к VPN». Если не открылось — используйте «Скопировать ссылку».\n';
+    } else {
+      el.innerHTML = '💻 Desktop: Нажмите «Скопировать ссылку» и вставьте в приложение-клиент вручную.';
+    }
+  }
+
+  window.addEventListener('load', () => {
+    try { detectDevice(); } catch(e) {}
+    const params = new URLSearchParams(location.search);
+    if (params.get('auto') === 'true') {
+      setTimeout(connectVPN, 600);
+    }
+  });
 </script>
 </body>
 </html>`;
