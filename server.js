@@ -240,7 +240,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
     <div class="content">
       <div class="status-card">🟢 Сервер активен · Нажмите «Подключиться к VPN» — приложение откроется автоматически</div>
       <button class="connect-button" id="connectBtn" onclick="connectVPN()">🚀 Подключиться к VPN</button>
-      <button class="copy-button" onclick="copyV2RayLink()">📋 Скопировать ссылку</button>
+      <button class="copy-button" id="copyBtn" onclick="copyV2RayLink()">📋 Скопировать ссылку</button>
       <a class="telegram-link" href="/u/${encodeURIComponent(slug)}/qr">📷 QR-код</a>
       <div id="deviceInfo" style="margin-top:14px;color:#e0e0e0;font-size:13px;opacity:.9"></div>
     </div>
@@ -338,6 +338,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 
   window.addEventListener('load', () => {
     try { detectDevice(); } catch(e) {}
+    // duplicate safety: attach events even if inline handlers blocked
+    try {
+      const c = document.getElementById('connectBtn');
+      if (c) c.addEventListener('click', (e) => { e.preventDefault(); connectVPN(); });
+      const cp = document.getElementById('copyBtn');
+      if (cp) cp.addEventListener('click', (e) => { e.preventDefault(); copyV2RayLink(); });
+    } catch(e) {}
     const params = new URLSearchParams(location.search);
     if (params.get('auto') === 'true') {
       setTimeout(connectVPN, 600);
@@ -403,7 +410,26 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 </div>
 <script>
   const text = ${safeVless};
-  QRCode.toCanvas(document.getElementById('qrcode'), text, {width:220, margin:2}, function(err){ if(err) console.error(err); });
+  (function renderQR(){
+    try {
+      if (window.QRCode && QRCode.toCanvas) {
+        QRCode.toCanvas(document.getElementById('qrcode'), text, {width:220, margin:2}, function(err){ if(err) console.error(err); });
+      } else {
+        // Fallback: QR server image
+        var img = new Image();
+        img.width = 220; img.height = 220; img.alt = 'QR';
+        img.src = 'https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=' + encodeURIComponent(text);
+        var c = document.getElementById('qrcode');
+        c.innerHTML = ''; c.appendChild(img);
+      }
+    } catch (e) {
+      var img2 = new Image();
+      img2.width = 220; img2.height = 220; img2.alt = 'QR';
+      img2.src = 'https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=' + encodeURIComponent(text);
+      var c2 = document.getElementById('qrcode');
+      c2.innerHTML = ''; c2.appendChild(img2);
+    }
+  })();
 </script>
 </body></html>`;
 }
