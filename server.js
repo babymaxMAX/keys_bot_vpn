@@ -117,7 +117,12 @@ app.get('/qr/:id', (req, res) => {
 app.get('/', (req, res) => {
   const sample = keys.slice(0, 50);
   const list = sample.map(k => `<li><a href="/k/${encodeURIComponent(k.id)}">${k.id}</a></li>`).join('');
-  res.type('html').send(`<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>LsJ⚔️VPN — Multi</title></head><body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:20px"><h1>Keys</h1><ul>${list}</ul><p>Health: <a href="/health">/health</a></p></body></html>`);
+  res.type('html').send(`<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>LsJ⚔️VPN — Multi</title></head><body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:20px"><h1>Keys (${keys.length})</h1><ul>${list || '<li>empty</li>'}</ul><p>All ids JSON: <a href="/list">/list</a> · Health: <a href="/healthz">/healthz</a></p></body></html>`);
+});
+
+// JSON list of all ids
+app.get('/list', (req, res) => {
+  res.json({ ids: keys.map(k => k.id) });
 });
 
 // Back-compat health route for Render settings
