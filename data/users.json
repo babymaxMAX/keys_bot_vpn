@@ -1,0 +1,19 @@
+[
+  {
+    "id": 1,
+    "inboundId": 1,
+    "enable": true,
+    "email": "user001",
+    "uuid": "e4392413-7142-4a95-a934-f084649b45e7",
+    "subId": "user001-sub",
+    "up": 0,
+    "down": 0,
+    "allTime": 0,
+    "expiryTime": 0,
+    "total": 0,
+    "reset": 0,
+    "lastOnline": 0
+  }
+]
+
+

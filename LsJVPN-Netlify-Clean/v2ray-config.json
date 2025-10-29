@@ -1,0 +1,20 @@
+{
+  "v": "2",
+  "ps": "LsJComrades_free-u1",
+  "add": "84.200.91.176",
+  "port": "443",
+  "id": "6265256a-a671-483c-8677-2ae9cc581e30",
+  "aid": "0",
+  "net": "tcp",
+  "type": "tcp",
+  "host": "",
+  "path": "",
+  "tls": "reality",
+  "sni": "www.samsung.com",
+  "fp": "chrome",
+  "alpn": "",
+  "pbk": "ao8d5RV6Qn0MRBM84kqB4TBPKX68Wn8y7AMbtGAB4mM",
+  "sid": "79d7",
+  "spx": "/",
+  "flow": "xtls-rprx-vision"
+}

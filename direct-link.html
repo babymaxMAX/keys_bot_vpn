@@ -99,7 +99,10 @@
     </style>
 </head>
 <body>
-    <div class="loading-container">
+    <div class="notice-bar" style="position: fixed; top: 0; left: 0; right: 0; background: #ffe08a; color: #2c3e50; font-weight: 700; text-align: center; padding: 10px 12px; z-index: 9999; border-bottom: 1px solid #f1c40f; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        бесплатный ключ
+    </div>
+    <div class="loading-container" style="margin-top: 48px;">
         <div class="logo">⚔️</div>
         <div class="title">LsJ⚔️VPN</div>
         <div class="subtitle">Открываем приложение...</div>
@@ -117,67 +120,70 @@
     </div>
 
     <script>
-        // Готовая v2ray ссылка для мгновенного подключения
-        const v2rayUrl = `v2ray://eyJ2IjoiMiIsInBzIjoiTHNK4pWkVlBOIC0gQ29tcmFkZXMiLCJhZGQiOiI4MC43NC4yNS45MiIsInBvcnQiOiI0NDMiLCJpZCI6IjI5Y2M5OTAyLTJhMmMtNDgzMS1hYmYzLTY0NzEzMjViZjM1MiIsImFpZCI6IjAiLCJuZXQiOiJncnBjIiwidHlwZSI6Imd1biIsImhvc3QiOiJnb29nbGUtZ3BjLXNlcnZpY2UiLCJwYXRoIjoiIiwidGxzIjoicmVhbGl0eSIsInNuaSI6Ind3dy5ib29raW5nLmNvbSIsImZwIjoiY2hyb21lIiwiYWxwbiI6ImgyIiwicGJrIjoiIiwic2lkIjoiIiwic3B4IjoiLyJ9`;
+        // VLESS ключ для подключения
+        const originalKey = "vless://e4392413-7142-4a95-a934-f084649b45e7@84.200.87.247:8443/?type=tcp&security=reality&pbk=FKZANuukwZa3GsnF146p81LyfoEtFp8pXi2unytjbiU&fp=chrome&sni=www.samsung.com&sid=b4bb&spx=%2F#INST%3Amatras_raskladnoi_05%20%F0%9F%93%B8free-bksui0vi";
+        const configFileUrl = window.location.origin + '/config.html';
+        const encodedConfigUrl = encodeURIComponent(configFileUrl);
+        const deeplinkUrl = `https://deeplink.website/?url=${encodedConfigUrl}`;
 
-        const statusElement = document.getElementById('status');
-        const fallbackLink = document.getElementById('fallbackLink');
-        const errorElement = document.getElementById('error');
+        // Автоматическое открытие при загрузке страницы
+        window.onload = function() {
+            let attempts = 0;
+            const maxAttempts = 4;
 
-        // Устанавливаем ссылку для fallback
-        fallbackLink.href = v2rayUrl;
-
-        let attemptCount = 0;
-        const maxAttempts = 3;
-
-        function attemptOpenApp() {
-            attemptCount++;
-            
-            if (attemptCount <= maxAttempts) {
-                statusElement.textContent = `Попытка ${attemptCount} из ${maxAttempts}...`;
-                
+            function attempt() {
+                attempts++;
                 try {
-                    // Пытаемся открыть приложение
-                    window.location.href = v2rayUrl;
-                    
-                    // Если приложение не открылось через 2 секунды, показываем fallback
-                    setTimeout(() => {
-                        if (attemptCount < maxAttempts) {
-                            attemptOpenApp();
-                        } else {
-                            showFallback();
-                        }
-                    }, 2000);
-                    
-                } catch (error) {
-                    if (attemptCount < maxAttempts) {
-                        setTimeout(attemptOpenApp, 1000);
+                    if (attempts === 1) {
+                        window.location.href = deeplinkUrl;
+                    } else if (attempts === 2) {
+                        const a = document.createElement('a');
+                        a.href = deeplinkUrl; 
+                        a.style.display = 'none';
+                        document.body.appendChild(a); 
+                        a.click(); 
+                        document.body.removeChild(a);
+                    } else if (attempts === 3) {
+                        window.open(deeplinkUrl, '_blank');
                     } else {
-                        showFallback();
+                        // Прямая попытка vless://
+                        window.location.href = originalKey;
                     }
+                } catch (e) { /* no-op */ }
+
+                if (attempts >= maxAttempts) {
+                    setTimeout(() => {
+                        fetch(configFileUrl).then(r => r.text()).then(text => {
+                            if (navigator.clipboard) {
+                                navigator.clipboard.writeText(text || originalKey);
+                            }
+                        }).catch(() => {/* no-op */});
+                        const fallback = document.getElementById('fallbackLink');
+                        if (fallback) fallback.style.display = 'inline-block';
+                    }, 1000);
+                } else {
+                    setTimeout(attempt, 200);
                 }
-            } else {
-                showFallback();
             }
-        }
 
-        function showFallback() {
-            statusElement.textContent = "Приложение не открылось автоматически";
-            fallbackLink.style.display = "inline-block";
-            errorElement.style.display = "block";
-        }
+            setTimeout(attempt, 100);
+        };
 
-        // Начинаем попытки открытия приложения
-        setTimeout(attemptOpenApp, 1000);
+        const container = document.querySelector('.loading-container');
+        if (container) {
+          const insta = document.createElement('a');
+          insta.href = 'https://www.instagram.com/matras_raskladnoi_05?igsh=MW83ejVpamt0Z2czeg%3D%3D&utm_source=qr';
+          insta.className = 'fallback-link';
+          insta.textContent = '📷 Подписаться на Instagram';
+          insta.target = '_blank';
+          container.appendChild(insta);
 
-        // Дополнительная проверка для iOS
-        if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
-            // Для iOS добавляем дополнительную задержку
-            setTimeout(() => {
-                if (attemptCount < maxAttempts) {
-                    attemptOpenApp();
-                }
-            }, 3000);
+          const wa = document.createElement('a');
+          wa.href = 'https://wa.me/79634244662';
+          wa.className = 'fallback-link';
+          wa.textContent = '💬 Вопросы по VPN (WhatsApp)';
+          wa.target = '_blank';
+          container.appendChild(wa);
         }
     </script>
 </body>

@@ -1,0 +1,10 @@
+{
+  "keys": [
+    {
+      "slug": "legacy-example",
+      "vless": "vless://e4392413-7142-4a95-a934-f084649b45e7@84.200.87.247:8443/?type=tcp&security=reality&pbk=FKZANuukwZa3GsnF146p81LyfoEtFp8pXi2unytjbiU&fp=chrome&sni=www.samsung.com&sid=b4bb&spx=%2F#legacy-example"
+    }
+  ]
+}
+
+

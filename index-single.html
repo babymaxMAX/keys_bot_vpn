@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LsJ⚔️VPN - One File</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        .container {
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            overflow: hidden;
+            max-width: 420px;
+            width: 100%;
+            position: relative;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #FFD700;
+            padding: 30px 20px;
+            text-align: center;
+            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .logo { font-size: 32px; margin-bottom: 8px; }
+        .service-name { font-size: 26px; font-weight: bold; color: #FFD700; }
+        .service-description { color: #FFD700; opacity: 0.9; font-weight: bold; }
+
+        .content { padding: 24px 18px; }
+
+        .status-card {
+            background: rgba(45, 45, 45, 0.9);
+            border-radius: 18px;
+            padding: 18px;
+            margin-bottom: 18px;
+            border-left: 5px solid #FFD700;
+            color: #e0e0e0;
+            font-size: 14px;
+        }
+
+        .connect-button {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #1a1a1a;
+            border: none;
+            border-radius: 18px;
+            padding: 18px 26px;
+            font-size: 18px;
+            font-weight: bold;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
+        }
+
+        .connect-button:hover { transform: translateY(-2px); }
+
+        .copy-button {
+            background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+            color: #FFD700;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 14px;
+            padding: 14px 18px;
+            font-size: 14px;
+            font-weight: bold;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 12px;
+        }
+
+        .telegram-link {
+            background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+            color: #FFD700;
+            text-decoration: none;
+            border-radius: 14px;
+            padding: 14px 18px;
+            font-size: 16px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .copy-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #1a1a1a;
+            padding: 14px 18px;
+            border-radius: 12px;
+            font-weight: bold;
+            transform: translateX(400px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .copy-notification.show { transform: translateX(0); }
+    </style>
+    <meta name="format-detection" content="telephone=no,email=no,address=no">
+</head>
+<body>
+    <div class="notice-bar" style="position: fixed; top: 0; left: 0; right: 0; background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); color: #1a1a1a; font-weight: bold; text-align: center; padding: 10px 12px; z-index: 9999; border-bottom: 2px solid rgba(255, 215, 0, 0.6); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        ключ постоянный
+    </div>
+    <div class="container">
+        <div class="header">
+            <div class="logo">⚔️</div>
+            <div class="service-name">LsJ⚔️VPN</div>
+            <div class="service-description">Comrades | Free</div>
+        </div>
+
+        <div class="content">
+            <div class="status-card">
+                🟢 Сервер активен · Нажмите «Подключиться к VPN» — приложение откроется автоматически
+            </div>
+
+            <button class="connect-button" onclick="connectVPN()" id="connectBtn">🚀 Подключиться к VPN</button>
+            <button class="copy-button" onclick="copyV2RayLink()">📋 Скопировать ссылку</button>
+
+            <a href="https://www.instagram.com/matras_raskladnoi_05?igsh=MW83ejVpamt0Z2czeg%3D%3D&utm_source=qr" class="telegram-link" target="_blank" rel="noopener">
+                📷 Подпишитесь на Instagram и выберите то, что подойдет именно тебе
+            </a>
+
+            <a href="https://wa.me/79634244662" class="telegram-link" target="_blank" rel="noopener">
+                💬 Вопросы по VPN (WhatsApp)
+            </a>
+        </div>
+    </div>
+
+    <div class="copy-notification" id="copyNotification">Ссылка скопирована!</div>
+
+    <script>
+        // Встроенный ключ VLESS
+        // Логика deeplink: используем config.html на этом же домене
+        const configFileUrl = window.location.origin + '/config.html';
+        const v2rayUrl = `https://deeplink.website/?url=${encodeURIComponent(configFileUrl)}`;
+
+        function showNotification(message = 'Ссылка скопирована!') {
+            const notification = document.getElementById('copyNotification');
+            notification.textContent = message;
+            notification.classList.add('show');
+            setTimeout(() => notification.classList.remove('show'), 3500);
+        }
+
+        function copyToClipboard(text) {
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text).catch(() => fallbackCopy(text));
+            } else { fallbackCopy(text); }
+        }
+
+        function fallbackCopy(text) {
+            const ta = document.createElement('textarea');
+            ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+        }
+
+        function copyV2RayLink() {
+            copyToClipboard(v2rayUrl);
+            showNotification('Ссылка для автоподключения скопирована!');
+        }
+
+        function connectVPN() {
+            const btn = document.getElementById('connectBtn');
+            const originalHtml = btn.innerHTML;
+            btn.innerHTML = '<span class="loading-spinner"></span>Подключение...';
+            btn.disabled = true;
+
+            let attempts = 0;
+            const maxAttempts = 3;
+
+            function attempt() {
+                attempts++;
+                try {
+                    if (attempts === 1) {
+                        window.location.href = v2rayUrl;
+                    } else if (attempts === 2) {
+                        const a = document.createElement('a');
+                        a.href = v2rayUrl; a.style.display = 'none';
+                        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+                    } else {
+                        window.open(v2rayUrl, '_blank');
+                    }
+                } catch (e) { /* no-op */ }
+
+                if (attempts >= maxAttempts) {
+                    setTimeout(() => {
+                        copyToClipboard(v2rayUrl);
+                        showNotification('Ссылка скопирована! Если приложение не открылось — вставьте вручную.');
+                        btn.innerHTML = originalHtml; btn.disabled = false;
+                    }, 1000);
+                } else {
+                    setTimeout(attempt, 200);
+                }
+            }
+
+            setTimeout(attempt, 100);
+        }
+    </script>
+</body>
+</html>
+
+

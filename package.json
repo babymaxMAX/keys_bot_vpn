@@ -1,0 +1,18 @@
+{
+  "name": "lsjvpn-multi",
+  "version": "1.0.0",
+  "description": "Multi-key LsJ⚔️VPN integration with unique links per key (Render-ready)",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "compression": "^1.7.4",
+    "express": "^4.19.2",
+    "helmet": "^7.1.0",
+    "morgan": "^1.10.0"
+  }
+}
+
+

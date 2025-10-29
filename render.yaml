@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: lsjvpn-multi
+    env: node
+    plan: free
+    buildCommand: "npm install"
+    startCommand: "npm start"
+    autoDeploy: true
+    region: frankfurt
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # Можно переопределить шаблон VLESS через переменные окружения
+      # - key: VPN_HOST
+      #   value: your-host
+      # - key: VPN_PORT
+      #   value: "8443"
+
+

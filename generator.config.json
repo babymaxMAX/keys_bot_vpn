@@ -1,0 +1,16 @@
+{
+  "host": "84.200.87.247",
+  "port": "8443",
+  "type": "tcp",
+  "security": "reality",
+  "pbk": "FKZANuukwZa3GsnF146p81LyfoEtFp8pXi2unytjbiU",
+  "sni": "www.samsung.com",
+  "fp": "chrome",
+  "sid": "b4bb",
+  "spx": "/",
+  "flow": "xtls-rprx-vision",
+  "tagPrefix": "",
+  "slugPrefix": ""
+}
+
+

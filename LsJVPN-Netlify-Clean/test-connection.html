@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест подключения LsJ⚔️VPN</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-button {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        .test-button:hover {
+            background: #218838;
+        }
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            background: #e9ecef;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 Тест подключения LsJ⚔️VPN</h1>
+        <p>Этот файл предназначен для тестирования различных способов подключения к VPN.</p>
+        
+        <h3>Способы подключения:</h3>
+        
+        <button class="test-button" onclick="testMethod1()">Метод 1: window.location.href</button>
+        <button class="test-button" onclick="testMethod2()">Метод 2: Скрытая ссылка</button>
+        <button class="test-button" onclick="testMethod3()">Метод 3: window.open</button>
+        <button class="test-button" onclick="testMethod4()">Метод 4: iframe</button>
+        
+        <div id="status" class="status">
+            Статус: Готов к тестированию
+        </div>
+        
+        <div style="margin-top: 20px;">
+            <h4>Информация о браузере:</h4>
+            <p id="browser-info"></p>
+        </div>
+    </div>
+
+    <script>
+        const v2rayUrl = `v2ray://eyJ2IjoiMiIsInBzIjoiTHNK4pWkVlBOIC0gQ29tcmFkZXMiLCJhZGQiOiI4MC43NC4yNS45MiIsInBvcnQiOiI0NDMiLCJpZCI6IjI5Y2M5OTAyLTJhMmMtNDgzMS1hYmYzLTY0NzEzMjViZjM1MiIsImFpZCI6IjAiLCJuZXQiOiJncnBjIiwidHlwZSI6Imd1biIsImhvc3QiOiJnb29nbGUtZ3BjLXNlcnZpY2UiLCJwYXRoIjoiIiwidGxzIjoicmVhbGl0eSIsInNuaSI6Ind3dy5ib29raW5nLmNvbSIsImZwIjoiY2hyb21lIiwiYWxwbiI6ImgyIiwicGJrIjoiIiwic2lkIjoiIiwic3B4IjoiLyJ9`;
+
+        function updateStatus(message, type = 'info') {
+            const statusDiv = document.getElementById('status');
+            statusDiv.textContent = `Статус: ${message}`;
+            statusDiv.className = `status ${type}`;
+        }
+
+        function testMethod1() {
+            updateStatus('Тестируем window.location.href...', 'info');
+            try {
+                window.location.href = v2rayUrl;
+                updateStatus('Метод 1 выполнен', 'success');
+            } catch (error) {
+                updateStatus(`Ошибка метода 1: ${error.message}`, 'error');
+            }
+        }
+
+        function testMethod2() {
+            updateStatus('Тестируем скрытую ссылку...', 'info');
+            try {
+                const link = document.createElement('a');
+                link.href = v2rayUrl;
+                link.style.display = 'none';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                updateStatus('Метод 2 выполнен', 'success');
+            } catch (error) {
+                updateStatus(`Ошибка метода 2: ${error.message}`, 'error');
+            }
+        }
+
+        function testMethod3() {
+            updateStatus('Тестируем window.open...', 'info');
+            try {
+                const newWindow = window.open(v2rayUrl, '_blank');
+                if (newWindow) {
+                    updateStatus('Метод 3 выполнен - новое окно открыто', 'success');
+                } else {
+                    updateStatus('Метод 3 выполнен - окно заблокировано', 'error');
+                }
+            } catch (error) {
+                updateStatus(`Ошибка метода 3: ${error.message}`, 'error');
+            }
+        }
+
+        function testMethod4() {
+            updateStatus('Тестируем iframe...', 'info');
+            try {
+                const iframe = document.createElement('iframe');
+                iframe.src = v2rayUrl;
+                iframe.style.display = 'none';
+                document.body.appendChild(iframe);
+                setTimeout(() => {
+                    document.body.removeChild(iframe);
+                    updateStatus('Метод 4 выполнен', 'success');
+                }, 1000);
+            } catch (error) {
+                updateStatus(`Ошибка метода 4: ${error.message}`, 'error');
+            }
+        }
+
+        // Показываем информацию о браузере
+        function showBrowserInfo() {
+            const browserInfo = document.getElementById('browser-info');
+            browserInfo.innerHTML = `
+                <strong>User Agent:</strong> ${navigator.userAgent}<br>
+                <strong>Платформа:</strong> ${navigator.platform}<br>
+                <strong>Мобильное устройство:</strong> ${/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? 'Да' : 'Нет'}<br>
+                <strong>iOS:</strong> ${/iPad|iPhone|iPod/.test(navigator.userAgent) ? 'Да' : 'Нет'}<br>
+                <strong>Android:</strong> ${/Android/.test(navigator.userAgent) ? 'Да' : 'Нет'}
+            `;
+        }
+
+        // Инициализация
+        window.addEventListener('load', showBrowserInfo);
+    </script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+{
+  "description": "LsJ VPN Configuration",
+  "public": true,
+  "files": {
+    "lsj_shared_32tb.sub": {
+      "content": "vless://5237a025-45ee-4e19-af7d-51842b64876e@84.200.91.176:22657/?type=tcp&security=reality&pbk=XzPwlqm8iaWQPy3tKXISfs5Yko_T-_yVJGeFDNtS3Xs&fp=chrome&sni=www.samsung.com&sid=3e&spx=%2F&flow=xtls-rprx-vision-udp443#INST%3Amatras_raskladnoi_05%20%F0%9F%93%B81%2F2year-1%2F2year"
+    }
+  }
+}

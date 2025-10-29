@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LsJ⚔️VPN - Comrades</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(255, 215, 0, 0.05) 0%, transparent 50%);
+            z-index: 1;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+
+        .container {
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            overflow: hidden;
+            max-width: 400px;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #FFD700;
+            padding: 35px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+            animation: headerShine 4s infinite;
+        }
+
+        @keyframes headerShine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FFD700 100%);
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: bold;
+            color: #1a1a1a;
+            box-shadow: 0 15px 35px rgba(255, 215, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+            border: 3px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .logo::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .service-name {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            position: relative;
+            z-index: 2;
+            color: #FFD700;
+            font-family: 'Times New Roman', serif;
+        }
+
+        .service-description {
+            font-size: 16px;
+            opacity: 0.9;
+            color: #FFD700;
+            font-weight: bold;
+            font-family: 'Times New Roman', serif;
+        }
+
+        .content {
+            padding: 30px 20px;
+        }
+
+        .status-card {
+            background: rgba(45, 45, 45, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-left: 5px solid #FFD700;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .status-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #FFD700, #FFA500, #FFD700);
+            animation: statusPulse 2s infinite;
+        }
+
+        @keyframes statusPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .status-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #FFD700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .status-icon {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+
+        .status-details {
+            font-size: 14px;
+            color: #e0e0e0;
+            line-height: 1.5;
+        }
+
+        .connect-button {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #1a1a1a;
+            border: none;
+            border-radius: 20px;
+            padding: 20px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
+        }
+
+        .connect-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .connect-button:hover::before {
+            left: 100%;
+        }
+
+        .connect-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(255, 215, 0, 0.4);
+        }
+
+        .connect-button:active {
+            transform: translateY(-1px);
+        }
+
+        .copy-button {
+            background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+            color: #FFD700;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 15px;
+            padding: 15px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .copy-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .copy-button:hover::before {
+            left: 100%;
+        }
+
+        .copy-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.2);
+            border-color: rgba(255, 215, 0, 0.6);
+        }
+
+        .copy-button:active {
+            transform: translateY(0);
+        }
+
+        .telegram-link {
+            background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+            color: #FFD700;
+            text-decoration: none;
+            border-radius: 15px;
+            padding: 15px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .telegram-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .telegram-link:hover::before {
+            left: 100%;
+        }
+
+        .telegram-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.2);
+            border-color: rgba(255, 215, 0, 0.6);
+        }
+
+        .telegram-icon {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+
+        .protocol-info {
+            background: rgba(45, 45, 45, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .protocol-info::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 40%, rgba(25, 118, 210, 0.05) 50%, transparent 60%);
+            animation: techShine 3s infinite;
+        }
+
+        @keyframes techShine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .protocol-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #FFD700;
+            margin-bottom: 5px;
+        }
+
+        .protocol-details {
+            font-size: 12px;
+            color: #e0e0e0;
+        }
+
+        .copy-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #1a1a1a;
+            padding: 18px 25px;
+            border-radius: 15px;
+            font-weight: bold;
+            transform: translateX(400px);
+            transition: all 0.4s ease;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .copy-notification.show {
+            transform: translateX(0);
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(26, 26, 26, 0.3);
+            border-radius: 50%;
+            border-top-color: #1a1a1a;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+            
+            .header {
+                padding: 20px 15px;
+            }
+            
+            .content {
+                padding: 20px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="notice-bar" style="position: fixed; top: 0; left: 0; right: 0; background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); color: #1a1a1a; font-weight: bold; text-align: center; padding: 10px 12px; z-index: 9999; border-bottom: 2px solid rgba(255, 215, 0, 0.6); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        ключ постоянный
+    </div>
+    <div class="container">
+        <div class="header">
+            <div class="logo">⚔️</div>
+            <div class="service-name">LsJ⚔️VPN</div>
+            <div class="service-description">Comrades | Free</div>
+        </div>
+        
+        <div class="content">
+            <div class="status-card">
+                <div class="status-title">
+                    <span class="status-icon">🟢</span>
+                    Сервер активен
+                </div>
+                <div class="status-details">
+                    IP: 84.200.89.166<br>
+                    Порт: 2053<br>
+                    Протокол: VLESS + TCP<br>
+                    Защита: Reality TLS
+                </div>
+            </div>
+
+            <button class="connect-button" id="connectBtn" onclick="connectVPN()">
+                🚀 Подключиться к VPN
+            </button>
+            
+            <button class="copy-button" onclick="copyV2RayLink()">
+                📋 Скопировать ссылку
+            </button>
+
+            <a href="https://t.me/L_S_J_PREMIUM1_bot" class="telegram-link" target="_blank">
+                <span class="telegram-icon">📱</span>
+                Наш Telegram бот
+            </a>
+
+            <div class="protocol-info">
+                <div class="protocol-title">🔧 Техническая информация</div>
+                <div class="protocol-details">
+                    VLESS / TCP / Reality<br>
+                    SNI: www.samsung.com<br>
+                    Fingerprint: Chrome
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="copy-notification" id="copyNotification">
+        Конфигурация скопирована!
+    </div>
+
+    <script>
+        // VLESS ключ для подключения
+        const originalKey = "vless://6265256a-a671-483c-8677-2ae9cc581e30@84.200.91.176:443/?type=tcp&security=reality&pbk=ao8d5RV6Qn0MRBM84kqB4TBPKX68Wn8y7AMbtGAB4mM&fp=chrome&sni=www.samsung.com&sid=79d7&spx=%2F&pqv=WMFxZMPgSM0oxK-VYlc5GGCpNv5xyvT1VvhJ1FNj8z-8pDts_5pS2CXXc2ngJHddEfGPvjJQC_yIqehxBBsCgdBICNEV17g9oxKoGkRkMqtSYk52Q0MBjLzGuk5C0fMnA-GfGjg6pG2Nv1EsrGhe-QKoblyGRTorJCx0O6pnCvNdhNNPgNbe4VT1UhNFcsLBf-O_8AKTfLD4h3RcjKTywkuS15BKF9O9X9IvamsfoWkeBe3o77jDvK6juY4BfjnGYEG0Y8fA8YoNYvzwtHfP_9UzVV98q8NkgxFpWc9fNgA0BR3uqecHW5tGop2TsMH9zZGEjVo1TWV_z0SqCJTCfqWZoNH8NfQbi2gJyeAohcNuWNdZXJyJaiEWSnCGqbi2VI1LQsbOfU2VvuG16nGYcJm1-0d1GbJc3nh05igKyqZ_WSIh80TqwSP2I1hUHqIrK4aZJsl-oOw1Rt-WCh3IxLzzrE0NBAO7zMazrIRvPJPMMhO8vZrGebZNFSjaH60NMB-l-5jzJFNJAx1ZzrAwat9Mn8ZJmpl3c35UWAvREKxR3lH3BkTCzWsayAw0sIBDV02q3jiGJjDQFIP18bgMVdsT3nCNELn4omC34e8-Y2Nunos_FpXe4z67dzCwJm_EuxI8XH0TDMifmwVUGajFHgeK5Do74Tef0LCrULK7nC2fsLGHL2S_T2Oro7rAW5Z3PV35Zowwv5OCTp93uWGJO2MOt8gQ5z_x8ZtgpZMuwuyTHdsTlQT9nXdaKGhVuhkS1XW3WkvsklTApclC17GUsgOW1K94iRkAkb_JFRjdzzjyrLS52IbwAmhsn_pRTvAkAnBKT7_38RJGfq3kXeiqPbWyudqmM1RoKz-zwBm6cgOY8EPssI2m_tkzxdfUmn8k7nWRZCIc6W5oXoK2IiGv1i2juk785Kpd7JlWSqNJD8Cz9v_DSD35IsSKmfusG46GtxuZa1L_iSbN2MV-J3YTFjxR8QDbciYYmcvmkctobY7srKZfujjUPYDQQ2_ZIHx9Ry3TajOJP0Jf5o-Vk05eG3N418Nij2JghcygL4manKbMDqz2NPnY3oNlnEcsrqfEb5UT9_hHpZ9jtYVz1furQQTqJKWoeFb31g6Tn_a-w8rpiQS0MUI8SLZQWbV_AzC1MnNX_CJi9Ju29aywX_RPlZih0EdJxUK8bj5uZ1AtkDz8uCZYaU4YW9nGsPkW30hLp4Ma3U5lb8rz4DOOiwKSWq7Q28eAtg_Pe8GAMLKb5Q64_GM1iDRVYMLPUgxqYrxNI7StqdD3Qy1VGamVEAukffgK_N_0AZcrBQwfxttgW-CSIox7Q5qxr1qUE-YYSIBulvrl4tintstSJmRBlfISFjRryfd75JACrsHp2Vp0phcWmdhAKEFNOBaeQlwlRRh1uix1f93NgFcdQRFUchh3Stl1ooEFhq8Zg8bCzE0tdm11iUwMeGZEYr5iH15UCt5lClNQ0D230vxCjHZX0OTolrubCTLLJ_PTuNz_KvaqL2aH_wF9OvZKI0K5HCHA7TpcohFg83V-dYvLAp7qA_DmX7GO2w_N1rP-XFTtCg-VdR0So1FaGmxY8LhQhV8m59Mek4hBaAYromNafRc6j-cTRaDuGnhvAWRkbo0AOxEWE3wC5hoKaYiaJ1JTiGW1rzCVPKIyiIYkKR4wP0Bgtbte1oH7LYQ97U2JqiWjWMEbMcLPmHWPh50DyfpVFxd84QNJSxMEca1ZXC6yUgmMqmfm_gWKaPJvogUuCG85UfrNQ8YcwOZzlVi5xIvFoH8KzY4X-NCUIzivsi5dhL1SlYfqP61VLtI4VnMXqysVwSo8Ae68pL-XIPn-rMkCuKhBGIB7AC0F7pVEh_xfRISoIvyKyX4GK2IHOB_cWjVTodkcCfNovN4G3qR78KDl6fCm8IM8B8DI-HI2kwpras75kpGH-i17CHnDq8jQcbCmfiMYQgKiVDuekWnXR2KyUu1MSwJn0RKd2cFhy2HXQ3YyW6ucBqp8vS9XbWjQ8rU0u24wNDAua26IvO6XtIrmsucpOERLlsLyIOcCa_yqJL6WWvtGBZBaGozBiC7Q6AVX0HuksysozIIOKDUjM1k_qdPM1zXLd-8jOO4HDYlN_hXFUMbs8n2F1LnJmK17NWVt3pQp8A9TFvJrmNaZFDFM_wetjtv5fQQRiYTS7ykmpbk4UM2D7dm-zQwkCjmBBIYB8sAzRpQG2Rev_9lQ4y9KmsgKe7OoRvZX69EVi50_k0ojjYnaVRWuRfFWcX9N1_msb84yJm1Fbs0J3m1tvri76d5rli9NoZQCPJ0lQYslnDnVlIYRYX5bvT9gmJao_8wyz4PQRbOZUkfObnPOo26_7qFZGxrGgqMiw6M2FUF-RbjkQ_j5yOekkvvwAhVKDK7o-98j6PGdOyBzpJnpLUyqo_mQ0rHau0jPAuL5oSEJHnVBDmpl2Cvv9kuaIk4EjCDen5WtNt17sLQ0EOkyBvLJ9ntyEPMB9WSvuleoW8a3OSzQSB_0mhPd9seUGfy7Wzjla-VTbNJMTvZY7qyD3KM26PEcA79uC4bwWsuo4EtotyYDMzyQumhYB6K4CC4PFyUWMTJzD0g";
+
+        function connectVPN() {
+            const btn = document.getElementById('connectBtn');
+            const originalHtml = btn.innerHTML;
+            btn.innerHTML = '<span class="loading-spinner"></span>Подключение...';
+            btn.disabled = true;
+
+            // Оригинальная логика: deeplink.website ссылается на config.html
+            const configFileUrl = window.location.origin + '/config.html';
+            const encodedConfigUrl = encodeURIComponent(configFileUrl);
+            const deeplinkUrl = `https://deeplink.website/?url=${encodedConfigUrl}`;
+
+            let attempts = 0;
+            const maxAttempts = 3;
+
+            function attempt() {
+                attempts++;
+                try {
+                    if (attempts === 1) {
+                        window.location.href = deeplinkUrl;
+                    } else if (attempts === 2) {
+                        const a = document.createElement('a');
+                        a.href = deeplinkUrl; 
+                        a.style.display = 'none';
+                        document.body.appendChild(a); 
+                        a.click(); 
+                        document.body.removeChild(a);
+                    } else {
+                        window.open(deeplinkUrl, '_blank');
+                    }
+                } catch (e) { /* no-op */ }
+
+                if (attempts >= maxAttempts) {
+                    setTimeout(() => {
+                        fetch(configFileUrl).then(r => r.text()).then(copyToClipboard).catch(() => copyToClipboard(''));
+                        showNotification('Ключ скопирован! Если приложение не открылось — вставьте вручную.');
+                        btn.innerHTML = originalHtml; 
+                        btn.disabled = false;
+                    }, 1000);
+                } else {
+                    setTimeout(attempt, 200);
+                }
+            }
+
+            setTimeout(attempt, 100);
+        }
+
+        function copyToClipboard(text) {
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text);
+            } else {
+                // Fallback для старых браузеров
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+            }
+        }
+
+        function showNotification(message = 'Конфигурация скопирована!') {
+            const notification = document.getElementById('copyNotification');
+            notification.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 4000);
+        }
+
+        function copyV2RayLink() {
+            const originalKey = "vless://6265256a-a671-483c-8677-2ae9cc581e30@84.200.91.176:443/?type=tcp&security=reality&pbk=ao8d5RV6Qn0MRBM84kqB4TBPKX68Wn8y7AMbtGAB4mM&fp=chrome&sni=www.samsung.com&sid=79d7&spx=%2F&pqv=WMFxZMPgSM0oxK-VYlc5GGCpNv5xyvT1VvhJ1FNj8z-8pDts_5pS2CXXc2ngJHddEfGPvjJQC_yIqehxBBsCgdBICNEV17g9oxKoGkRkMqtSYk52Q0MBjLzGuk5C0fMnA-GfGjg6pG2Nv1EsrGhe-QKoblyGRTorJCx0O6pnCvNdhNNPgNbe4VT1UhNFcsLBf-O_8AKTfLD4h3RcjKTywkuS15BKF9O9X9IvamsfoWkeBe3o77jDvK6juY4BfjnGYEG0Y8fA8YoNYvzwtHfP_9UzVV98q8NkgxFpWc9fNgA0BR3uqecHW5tGop2TsMH9zZGEjVo1TWV_z0SqCJTCfqWZoNH8NfQbi2gJyeAohcNuWNdZXJyJaiEWSnCGqbi2VI1LQsbOfU2VvuG16nGYcJm1-0d1GbJc3nh05igKyqZ_WSIh80TqwSP2I1hUHqIrK4aZJsl-oOw1Rt-WCh3IxLzzrE0NBAO7zMazrIRvPJPMMhO8vZrGebZNFSjaH60NMB-l-5jzJFNJAx1ZzrAwat9Mn8ZJmpl3c35UWAvREKxR3lH3BkTCzWsayAw0sIBDV02q3jiGJjDQFIP18bgMVdsT3nCNELn4omC34e8-Y2Nunos_FpXe4z67dzCwJm_EuxI8XH0TDMifmwVUGajFHgeK5Do74Tef0LCrULK7nC2fsLGHL2S_T2Oro7rAW5Z3PV35Zowwv5OCTp93uWGJO2MOt8gQ5z_x8ZtgpZMuwuyTHdsTlQT9nXdaKGhVuhkS1XW3WkvsklTApclC17GUsgOW1K94iRkAkb_JFRjdzzjyrLS52IbwAmhsn_pRTvAkAnBKT7_38RJGfq3kXeiqPbWyudqmM1RoKz-zwBm6cgOY8EPssI2m_tkzxdfUmn8k7nWRZCIc6W5oXoK2IiGv1i2juk785Kpd7JlWSqNJD8Cz9v_DSD35IsSKmfusG46GtxuZa1L_iSbN2MV-J3YTFjxR8QDbciYYmcvmkctobY7srKZfujjUPYDQQ2_ZIHx9Ry3TajOJP0Jf5o-Vk05eG3N418Nij2JghcygL4manKbMDqz2NPnY3oNlnEcsrqfEb5UT9_hHpZ9jtYVz1furQQTqJKWoeFb31g6Tn_a-w8rpiQS0MUI8SLZQWbV_AzC1MnNX_CJi9Ju29aywX_RPlZih0EdJxUK8bj5uZ1AtkDz8uCZYaU4YW9nGsPkW30hLp4Ma3U5lb8rz4DOOiwKSWq7Q28eAtg_Pe8GAMLKb5Q64_GM1iDRVYMLPUgxqYrxNI7StqdD3Qy1VGamVEAukffgK_N_0AZcrBQwfxttgW-CSIox7Q5qxr1qUE-YYSIBulvrl4tintstSJmRBlfISFjRryfd75JACrsHp2Vp0phcWmdhAKEFNOBaeQlwlRRh1uix1f93NgFcdQRFUchh3Stl1ooEFhq8Zg8bCzE0tdm11iUwMeGZEYr5iH15UCt5lClNQ0D230vxCjHZX0OTolrubCTLLJ_PTuNz_KvaqL2aH_wF9OvZKI0K5HCHA7TpcohFg83V-dYvLAp7qA_DmX7GO2w_N1rP-XFTtCg-VdR0So1FaGmxY8LhQhV8m59Mek4hBaAYromNafRc6j-cTRaDuGnhvAWRkbo0AOxEWE3wC5hoKaYiaJ1JTiGW1rzCVPKIyiIYkKR4wP0Bgtbte1oH7LYQ97U2JqiWjWMEbMcLPmHWPh50DyfpVFxd84QNJSxMEca1ZXC6yUgmMqmfm_gWKaPJvogUuCG85UfrNQ8YcwOZzlVi5xIvFoH8KzY4X-NCUIzivsi5dhL1SlYfqP61VLtI4VnMXqysVwSo8Ae68pL-XIPn-rMkCuKhBGIB7AC0F7pVEh_xfRISoIvyKyX4GK2IHOB_cWjVTodkcCfNovN4G3qR78KDl6fCm8IM8B8DI-HI2kwpras75kpGH-i17CHnDq8jQcbCmfiMYQgKiVDuekWnXR2KyUu1MSwJn0RKd2cFhy2HXQ3YyW6ucBqp8vS9XbWjQ8rU0u24wNDAua26IvO6XtIrmsucpOERLlsLyIOcCa_yqJL6WWvtGBZBaGozBiC7Q6AVX0HuksysozIIOKDUjM1k_qdPM1zXLd-8jOO4HDYlN_hXFUMbs8n2F1LnJmK17NWVt3pQp8A9TFvJrmNaZFDFM_wetjtv5fQQRiYTS7ykmpbk4UM2D7dm-zQwkCjmBBIYB8sAzRpQG2Rev_9lQ4y9KmsgKe7OoRvZX69EVi50_k0ojjYnaVRWuRfFWcX9N1_msb84yJm1Fbs0J3m1tvri76d5rli9NoZQCPJ0lQYslnDnVlIYRYX5bvT9gmJao_8wyz4PQRbOZUkfObnPOo26_7qFZGxrGgqMiw6M2FUF-RbjkQ_j5yOekkvvwAhVKDK7o-98j6PGdOyBzpJnpLUyqo_mQ0rHau0jPAuL5oSEJHnVBDmpl2Cvv9kuaIk4EjCDen5WtNt17sLQ0EOkyBvLJ9ntyEPMB9WSvuleoW8a3OSzQSB_0mhPd9seUGfy7Wzjla-VTbNJMTvZY7qyD3KM26PEcA79uC4bwWsuo4EtotyYDMzyQumhYB6K4CC4PFyUWMTJzD0g";
+            
+            fetch(configFileUrl).then(r => r.text()).then(text => {
+                copyToClipboard(text);
+                showNotification('VLESS ключ скопирован!');
+            }).catch(() => {
+                copyToClipboard('');
+                showNotification('VLESS ключ скопирован!');
+            });
+        }
+
+
+
+        // Добавляем обработчик для автоматического подключения при загрузке страницы
+        window.addEventListener('load', function() {
+            // Проверяем, есть ли параметр auto в URL
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('auto') === 'true') {
+                setTimeout(connectVPN, 1000);
+            }
+            
+            // Определяем тип устройства и показываем соответствующие инструкции
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+            const isAndroid = /Android/.test(navigator.userAgent);
+            
+                         if (isMobile) {
+                 // Для мобильных устройств показываем специальные инструкции
+                 const statusDetails = document.querySelector('.status-details');
+                 if (statusDetails) {
+                     statusDetails.innerHTML += '<br><br><strong>📱 Мобильное устройство:</strong><br>';
+                     if (isIOS) {
+                         statusDetails.innerHTML += 'Нажмите "Подключиться к VPN" - конфигурация добавится автоматически';
+                     } else if (isAndroid) {
+                         statusDetails.innerHTML += 'Нажмите "Подключиться к VPN" - конфигурация добавится автоматически';
+                     }
+                 }
+             } else {
+                 // Для десктопа показываем инструкции по копированию
+                 const statusDetails = document.querySelector('.status-details');
+                 if (statusDetails) {
+                     statusDetails.innerHTML += '<br><br><strong>💻 Десктоп:</strong><br>';
+                     statusDetails.innerHTML += 'Нажмите "Скопировать ссылку" и вставьте в v2raytun';
+                 }
+             }
+        });
+    </script>
+</body>
+</html>
