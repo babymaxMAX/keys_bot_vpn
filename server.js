@@ -109,7 +109,9 @@ app.get('/c/:id', (req, res) => {
 app.get('/qr/:id', (req, res) => {
   const k = idToKey.get(req.params.id);
   if (!k) return res.status(404).send('Not found');
-  const payload = k.sub || `${(APP_BASE_URL || getBaseUrl(req))}/k/${encodeURIComponent(k.id)}`;
+  // Prefer raw vless for QR; fallback to sub or dynamic link
+  const payload = k.vless || k.sub || `${(APP_BASE_URL || getBaseUrl(req))}/k/${encodeURIComponent(k.id)}`;
+  res.setHeader('Cache-Control', 'no-store');
   res.render('qr', { id: k.id, payload, label: k.label || 'LsJ⚔️VPN' });
 });
 
