@@ -2,7 +2,6 @@ import express from 'express';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import helmet from 'helmet';
 import morgan from 'morgan';
 import compression from 'compression';
 
@@ -170,13 +169,7 @@ app.disable('x-powered-by');
 app.use(morgan('tiny'));
 app.use(compression());
 // Relax security headers to ensure inline scripts and CDN QR library work on mobile clients
-app.use(
-  helmet({
-    contentSecurityPolicy: false,
-    crossOriginEmbedderPolicy: false,
-    crossOriginResourcePolicy: { policy: 'cross-origin' }
-  })
-);
+// NOTE: No security headers middleware here to avoid blocking inline scripts / deeplinks on mobile
 
 function notFound(res, slug) {
   res
