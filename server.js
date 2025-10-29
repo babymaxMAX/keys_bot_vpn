@@ -52,10 +52,9 @@ app.get('/c/:id', (req, res) => {
   const k = idToKey.get(req.params.id);
   if (!k) return res.status(404).send('Not found');
   res.setHeader('Cache-Control', 'no-store');
-  res.render('config', {
-    id: k.id,
-    raw: k.sub || k.vless
-  });
+  // v2rayTun expects plain text (not HTML). Send raw line with trailing newline.
+  const raw = k.sub || k.vless;
+  res.type('text/plain').send((raw || '') + '\n');
 });
 
 // QR page
