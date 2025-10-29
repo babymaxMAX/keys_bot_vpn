@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LsJ⚔️VPN — QR</title>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+  <style>
+    #qrcode { width: 240px; margin: 40px auto; display:block; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 16px; text-align:center; }
+  </style>
+</head>
+<body>
+  <h1>QR для: <%= id %></h1>
+  <canvas id="qrcode"></canvas>
+  <script>
+    const payload = `<%- payload %>`;
+    try {
+      QRCode.toCanvas(document.getElementById('qrcode'), payload, { width: 240 });
+    } catch (e) {
+      const img = new Image();
+      img.src = 'https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=' + encodeURIComponent(payload);
+      const c = document.getElementById('qrcode'); c.replaceWith(img);
+    }
+  </script>
+</body>
+</html>
+
+

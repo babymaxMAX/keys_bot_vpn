@@ -1,0 +1,17 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+.notice-bar { position: fixed; top: 0; left: 0; right: 0; background: #ffe08a; color: #2c3e50; font-weight: 700; text-align: center; padding: 10px 12px; z-index: 9999; border-bottom: 1px solid #f1c40f; }
+.container { background: white; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); overflow: hidden; max-width: 450px; width: 100%; }
+.header { background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); color: white; padding: 30px 20px; text-align: center; }
+.logo { width: 60px; height: 60px; background: #f39c12; border-radius: 15px; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; color: white; }
+.service-name { font-size: 24px; font-weight: bold; margin-bottom: 5px; }
+.service-description { font-size: 14px; opacity: 0.9; }
+.content { padding: 30px 20px; text-align: center; }
+.connect-button { background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; border: none; border-radius: 15px; padding: 18px 30px; font-size: 18px; font-weight: bold; width: 100%; cursor: pointer; transition: all 0.3s ease; margin-bottom: 15px; }
+.copy-button { background: linear-gradient(135deg, #6c757d 0%, #495057 100%); color: white; border: none; border-radius: 10px; padding: 12px 20px; font-size: 14px; font-weight: bold; width: 100%; cursor: pointer; transition: all 0.3s ease; margin-bottom: 15px; }
+.protocol-info { background: #e3f2fd; border-radius: 10px; padding: 15px; margin-top: 20px; text-align: center; }
+.protocol-title { font-size: 14px; font-weight: bold; color: #1976d2; margin-bottom: 5px; }
+.protocol-details { font-size: 12px; color: #424242; }
+.copy-notification { position: fixed; top: 20px; right: 20px; background: #28a745; color: white; padding: 15px 20px; border-radius: 10px; font-weight: bold; transform: translateX(400px); transition: transform 0.3s ease; z-index: 1000; }
+.copy-notification.show { transform: translateX(0); }
+

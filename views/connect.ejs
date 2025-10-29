@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LsJ⚔️VPN — Автоподключение</title>
+  <link rel="stylesheet" href="/public/style.css" />
+</head>
+<body>
+  <div class="notice-bar">бесплатный ключ</div>
+  <div class="container">
+    <div class="header">
+      <div class="logo">⚔️</div>
+      <div class="service-name">LsJ⚔️VPN</div>
+      <div class="service-description"><%= label %></div>
+    </div>
+
+    <div class="content">
+      <button class="connect-button" id="connectBtn">🚀 Подключиться к VPN</button>
+      <button class="copy-button" id="copyBtn">📋 Скопировать ссылку</button>
+      <div class="protocol-info">
+        <div class="protocol-title">🔧 Техническая информация</div>
+        <div class="protocol-details">VLESS / TCP / Reality · SNI: www.samsung.com · FP: Chrome</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="copy-notification" id="copyNotification">Конфигурация скопирована!</div>
+
+  <script>
+    const originalKey = `<%- vless %>`;
+    const configFileUrl = `<%- configUrl %>`;
+    const deeplinkUrl = `https://deeplink.website/?url=${encodeURIComponent(configFileUrl)}`;
+
+    function copyToClipboard(text) {
+      if (navigator.clipboard) return navigator.clipboard.writeText(text);
+      const ta = document.createElement('textarea'); ta.value = text;
+      ta.style.position='fixed'; ta.style.left='-99999px'; document.body.appendChild(ta);
+      ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+      return Promise.resolve();
+    }
+
+    function showNote(msg='Ссылка скопирована!') {
+      const n = document.getElementById('copyNotification');
+      n.textContent = msg; n.classList.add('show');
+      setTimeout(()=> n.classList.remove('show'), 3500);
+    }
+
+    function connect() {
+      let attempts = 0, max = 4;
+      function tryStep() {
+        attempts++;
+        try {
+          if (attempts === 1) {
+            window.location.href = deeplinkUrl;
+          } else if (attempts === 2) {
+            const a = document.createElement('a');
+            a.href = deeplinkUrl; a.style.display='none';
+            document.body.appendChild(a); a.click(); a.remove();
+          } else if (attempts === 3) {
+            window.open(deeplinkUrl, '_blank');
+          } else {
+            window.location.href = originalKey;
+          }
+        } catch(e) {}
+
+        if (attempts >= max) {
+          setTimeout(async () => {
+            await copyToClipboard(originalKey);
+            showNote('Ссылка скопирована! Если приложение не открылось — вставьте вручную.');
+          }, 800);
+        } else {
+          setTimeout(tryStep, 200);
+        }
+      }
+      setTimeout(tryStep, 100);
+    }
+
+    document.getElementById('connectBtn').addEventListener('click', connect);
+    document.getElementById('copyBtn').addEventListener('click', async () => {
+      await copyToClipboard(originalKey); showNote('Ссылка v2ray скопирована в буфер обмена!');
+    });
+
+    window.addEventListener('load', () => {
+      const q = new URLSearchParams(location.search);
+      if (q.get('auto') === 'true') setTimeout(connect, 600);
+    });
+  </script>
+</body>
+</html>
+
+
