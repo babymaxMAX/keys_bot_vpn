@@ -10,16 +10,63 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const APP_BASE_URL = process.env.APP_BASE_URL || null; // prefer dynamic per-request base
 
-// Load keys.json (array)
-const KEYS_PATH = path.join(__dirname, 'data', 'keys.json');
-let keys = [];
-try {
-  keys = JSON.parse(fs.readFileSync(KEYS_PATH, 'utf8')) || [];
-} catch (e) {
-  console.error('Failed to read data/keys.json:', e.message);
-  keys = [];
+// Helpers to ingest keys from multiple sources (keys.json + vless.txt)
+const DATA_DIR = path.join(__dirname, 'data');
+const KEYS_PATH = path.join(DATA_DIR, 'keys.json');
+const VLESS_PATH = path.join(DATA_DIR, 'vless.txt');
+
+function readJsonSafe(p, fallback = []) {
+  try {
+    if (!fs.existsSync(p)) return fallback;
+    return JSON.parse(fs.readFileSync(p, 'utf8')) || fallback;
+  } catch (e) {
+    console.error('Failed to read JSON', p, e.message);
+    return fallback;
+  }
 }
-const idToKey = new Map(keys.map(k => [String(k.id), k]));
+function readLinesSafe(p) {
+  try {
+    if (!fs.existsSync(p)) return [];
+    return fs.readFileSync(p, 'utf8').split(/\r?\n/).map(s => s.trim()).filter(Boolean);
+  } catch (e) {
+    console.error('Failed to read lines', p, e.message);
+    return [];
+  }
+}
+function sanitizeId(s) {
+  return String(s || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9-_]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 64) || 'key';
+}
+function parseUuidFromVless(v) {
+  const m = /^vless:\/\/([0-9a-fA-F-]+)@/.exec(v);
+  return m ? m[1] : null;
+}
+function parseTagFromVless(v) {
+  const i = v.indexOf('#');
+  return i >= 0 ? decodeURIComponent(v.slice(i + 1)) : null;
+}
+
+// Build unified keys list
+const keysJson = readJsonSafe(KEYS_PATH, []);
+const vlessLines = readLinesSafe(VLESS_PATH);
+
+const idToKey = new Map();
+for (const k of keysJson) {
+  if (k && k.id && (k.vless || k.sub)) idToKey.set(String(k.id), k);
+}
+vlessLines.forEach((line, idx) => {
+  if (!line.startsWith('vless://')) return;
+  const tag = parseTagFromVless(line) || parseUuidFromVless(line) || `line-${idx + 1}`;
+  let id = sanitizeId(tag);
+  let suffix = 1;
+  while (idToKey.has(id)) { id = sanitizeId(tag + '-' + (++suffix)); }
+  if (!idToKey.has(id)) idToKey.set(id, { id, vless: line, label: tag });
+});
+
+const keys = Array.from(idToKey.values());
 
 // EJS views and static
 app.set('view engine', 'ejs');
@@ -67,7 +114,8 @@ app.get('/qr/:id', (req, res) => {
 
 // Optional: list ids for sanity
 app.get('/', (req, res) => {
-  const list = keys.map(k => `<li><a href="/k/${encodeURIComponent(k.id)}">${k.id}</a></li>`).join('');
+  const sample = keys.slice(0, 50);
+  const list = sample.map(k => `<li><a href="/k/${encodeURIComponent(k.id)}">${k.id}</a></li>`).join('');
   res.type('html').send(`<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>LsJ⚔️VPN — Multi</title></head><body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:20px"><h1>Keys</h1><ul>${list}</ul><p>Health: <a href="/health">/health</a></p></body></html>`);
 });
 
