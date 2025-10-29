@@ -75,6 +75,7 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 
 // Health
 app.get('/health', (req, res) => res.status(200).send('ok'));
+app.head('/health', (req, res) => res.status(200).end());
 
 // Connect page (auto)
 function getBaseUrl(req) {
@@ -121,6 +122,7 @@ app.get('/', (req, res) => {
 
 // Back-compat health route for Render settings
 app.get('/healthz', (req, res) => res.status(200).send('ok'));
+app.head('/healthz', (req, res) => res.status(200).end());
 
 app.listen(PORT, () => {
   console.log('Listening on :' + PORT);
