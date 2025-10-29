@@ -1,17 +1,91 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
-.notice-bar { position: fixed; top: 0; left: 0; right: 0; background: #ffe08a; color: #2c3e50; font-weight: 700; text-align: center; padding: 10px 12px; z-index: 9999; border-bottom: 1px solid #f1c40f; }
-.container { background: white; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); overflow: hidden; max-width: 450px; width: 100%; }
-.header { background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); color: white; padding: 30px 20px; text-align: center; }
-.logo { width: 60px; height: 60px; background: #f39c12; border-radius: 15px; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; color: white; }
-.service-name { font-size: 24px; font-weight: bold; margin-bottom: 5px; }
-.service-description { font-size: 14px; opacity: 0.9; }
-.content { padding: 30px 20px; text-align: center; }
-.connect-button { background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; border: none; border-radius: 15px; padding: 18px 30px; font-size: 18px; font-weight: bold; width: 100%; cursor: pointer; transition: all 0.3s ease; margin-bottom: 15px; }
-.copy-button { background: linear-gradient(135deg, #6c757d 0%, #495057 100%); color: white; border: none; border-radius: 10px; padding: 12px 20px; font-size: 14px; font-weight: bold; width: 100%; cursor: pointer; transition: all 0.3s ease; margin-bottom: 15px; }
-.protocol-info { background: #e3f2fd; border-radius: 10px; padding: 15px; margin-top: 20px; text-align: center; }
-.protocol-title { font-size: 14px; font-weight: bold; color: #1976d2; margin-bottom: 5px; }
-.protocol-details { font-size: 12px; color: #424242; }
-.copy-notification { position: fixed; top: 20px; right: 20px; background: #28a745; color: white; padding: 15px 20px; border-radius: 10px; font-weight: bold; transform: translateX(400px); transition: transform 0.3s ease; z-index: 1000; }
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Playfair+Display:wght@700;800&display=swap');
+
+/* Premium gradient background with subtle noise overlay */
+body {
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: radial-gradient(1200px 800px at 15% 10%, rgba(255, 215, 0, 0.09), transparent 40%),
+              radial-gradient(1000px 700px at 85% 90%, rgba(138, 43, 226, 0.12), transparent 45%),
+              linear-gradient(135deg, #0f1020 0%, #0b0c14 55%, #12132b 100%);
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+}
+
+.notice-bar {
+  position: fixed; top: 0; left: 0; right: 0;
+  background: linear-gradient(90deg, rgba(255,215,0,0.18), rgba(255,215,0,0.28));
+  color: #f5f5f5; font-weight: 700; text-align: center; padding: 10px 12px; z-index: 9999;
+  border-bottom: 1px solid rgba(255,215,0,0.35);
+  backdrop-filter: blur(6px);
+}
+
+.container {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 22px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.45);
+  overflow: hidden; max-width: 480px; width: 100%;
+  backdrop-filter: blur(14px);
+}
+
+.header {
+  position: relative; text-align: center; padding: 34px 22px; color: #fff;
+  background: linear-gradient(180deg, rgba(18,19,43,0.85) 0%, rgba(18,19,43,0.5) 100%);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.logo {
+  width: 78px; height: 78px; margin: 0 auto 14px; border-radius: 18px;
+  background: linear-gradient(135deg, #FFD700 0%, #9c6bff 100%);
+  box-shadow: 0 15px 40px rgba(156,107,255,0.35), inset 0 0 0 3px rgba(255,255,255,0.15);
+  display: flex; align-items: center; justify-content: center;
+  color: #13142b; font-size: 30px; font-weight: 800;
+}
+
+.service-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px; font-weight: 800; letter-spacing: 0.2px; margin-bottom: 6px;
+}
+
+.service-description { font-size: 14px; opacity: 0.9; color: #d7d7df; }
+
+.content { padding: 28px 20px; text-align: center; }
+
+.connect-button {
+  background: linear-gradient(135deg, #FFD700 0%, #f0a400 45%, #FFD700 100%);
+  color: #14151f; border: none; border-radius: 16px; padding: 18px 28px;
+  font-size: 18px; font-weight: 800; width: 100%; cursor: pointer;
+  transition: transform .25s ease, box-shadow .25s ease, filter .25s ease;
+  margin-bottom: 14px;
+  box-shadow: 0 14px 36px rgba(255, 215, 0, 0.25);
+}
+.connect-button:hover { transform: translateY(-2px); filter: brightness(1.02); box-shadow: 0 18px 46px rgba(255,215,0,0.28); }
+.connect-button:active { transform: translateY(0); }
+
+.copy-button {
+  background: linear-gradient(135deg, #1f2136 0%, #17182a 100%);
+  color: #e9e9f3; border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 14px 20px;
+  font-size: 14px; font-weight: 700; width: 100%; cursor: pointer; transition: all .25s ease; margin-bottom: 16px;
+}
+.copy-button:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(0,0,0,0.35); border-color: rgba(255,215,0,0.35); }
+
+.protocol-info { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 16px; margin-top: 18px; }
+.protocol-title { font-size: 13px; font-weight: 800; color: #FFD700; margin-bottom: 6px; letter-spacing: .3px; }
+.protocol-details { font-size: 12px; color: #cfd1dd; }
+
+.copy-notification {
+  position: fixed; top: 20px; right: 20px;
+  background: linear-gradient(135deg, #FFD700 0%, #f0a400 100%);
+  color: #14151f; padding: 14px 18px; border-radius: 12px; font-weight: 800;
+  transform: translateX(400px); transition: transform 0.3s ease; z-index: 1000;
+  box-shadow: 0 16px 40px rgba(255,215,0,0.25);
+}
 .copy-notification.show { transform: translateX(0); }
+
+@media (max-width: 520px) {
+  .container { border-radius: 18px; }
+  .header { padding: 26px 16px; }
+  .content { padding: 22px 16px; }
+}
 
