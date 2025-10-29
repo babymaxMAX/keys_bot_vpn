@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "start": "node server.js",
-    "dev": "node server.js"
+    "dev": "node server.js",
+    "gen:folder": "node scripts/folder-linker.js"
   },
   "dependencies": {
     "compression": "^1.7.4",
